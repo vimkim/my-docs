@@ -1,0 +1,554 @@
+{
+  "retrieved_at_utc": "2026-10-28T04:53:47.973412+00:00",
+  "date_semantics": {
+    "created_at": "GitHub repository creation, not product launch",
+    "updated_at": "GitHub repository metadata update; not used as code activity",
+    "pushed_at": "Most recent push across branches",
+    "latest_default_branch_commit.committer_date": "Latest default-branch commit committer date; displayed as last code update"
+  },
+  "repositories": [
+    {
+      "requested_repository": "microsoft/playwright-cli",
+      "full_name": "microsoft/playwright-cli",
+      "html_url": "https://github.com/microsoft/playwright-cli",
+      "created_at": "2020-06-19T18:34:03Z",
+      "updated_at": "2026-10-28T04:32:16Z",
+      "pushed_at": "2026-10-19T21:35:05Z",
+      "stargazers_count": 14688,
+      "forks_count": 861,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "main",
+      "description": "CLI for common Playwright actions. Record and generate Playwright code, inspect selectors and take screenshots.",
+      "license": {
+        "key": "apache-2.0",
+        "name": "Apache License 2.0",
+        "spdx_id": "Apache-2.0",
+        "url": "https://api.github.com/licenses/apache-2.0",
+        "node_id": "MDc6TGljZW5zZTI="
+      },
+      "latest_default_branch_commit": {
+        "sha": "b1a5903c5b633b8c9f843ad7b629c2a78437040c",
+        "committer_date": "2026-10-19T21:35:05Z",
+        "author_date": "2026-10-19T21:35:05Z",
+        "html_url": "https://github.com/microsoft/playwright-cli/commit/b1a5903c5b633b8c9f843ad7b629c2a78437040c",
+        "subject": "fix(cli): respect npm registry config in update check (#484)"
+      },
+      "metadata_source": "https://api.github.com/repos/microsoft/playwright-cli",
+      "commit_source": "https://api.github.com/repos/microsoft/playwright-cli/commits?per_page=1"
+    },
+    {
+      "requested_repository": "microsoft/playwright-mcp",
+      "full_name": "microsoft/playwright-mcp",
+      "html_url": "https://github.com/microsoft/playwright-mcp",
+      "created_at": "2025-03-21T17:48:36Z",
+      "updated_at": "2026-10-28T04:38:12Z",
+      "pushed_at": "2026-10-22T17:43:26Z",
+      "stargazers_count": 38726,
+      "forks_count": 3333,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "main",
+      "description": "Playwright MCP server",
+      "license": {
+        "key": "apache-2.0",
+        "name": "Apache License 2.0",
+        "spdx_id": "Apache-2.0",
+        "url": "https://api.github.com/licenses/apache-2.0",
+        "node_id": "MDc6TGljZW5zZTI="
+      },
+      "latest_default_branch_commit": {
+        "sha": "0c4107acbecb75472b23c05c0e42471a0011874f",
+        "committer_date": "2026-10-22T17:43:21Z",
+        "author_date": "2026-10-22T17:43:21Z",
+        "html_url": "https://github.com/microsoft/playwright-mcp/commit/0c4107acbecb75472b23c05c0e42471a0011874f",
+        "subject": "chore(deps-dev): bump @modelcontextprotocol/sdk from 1.31.0 to 1.32.0 (#1801)"
+      },
+      "metadata_source": "https://api.github.com/repos/microsoft/playwright-mcp",
+      "commit_source": "https://api.github.com/repos/microsoft/playwright-mcp/commits?per_page=1"
+    },
+    {
+      "requested_repository": "ChromeDevTools/chrome-devtools-mcp",
+      "full_name": "ChromeDevTools/chrome-devtools-mcp",
+      "html_url": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+      "created_at": "2025-09-11T10:39:55Z",
+      "updated_at": "2026-10-28T04:52:13Z",
+      "pushed_at": "2026-10-27T14:22:41Z",
+      "stargazers_count": 54313,
+      "forks_count": 5893,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "main",
+      "description": "Chrome DevTools for coding agents",
+      "license": {
+        "key": "apache-2.0",
+        "name": "Apache License 2.0",
+        "spdx_id": "Apache-2.0",
+        "url": "https://api.github.com/licenses/apache-2.0",
+        "node_id": "MDc6TGljZW5zZTI="
+      },
+      "latest_default_branch_commit": {
+        "sha": "a24334d3a1733996438c3c4786ab4f880aaaf044",
+        "committer_date": "2026-10-27T14:17:18Z",
+        "author_date": "2026-10-27T14:17:18Z",
+        "html_url": "https://github.com/ChromeDevTools/chrome-devtools-mcp/commit/a24334d3a1733996438c3c4786ab4f880aaaf044",
+        "subject": "fix(plugin): launch the Claude Code MCP server with npx --prefix (#3353)"
+      },
+      "metadata_source": "https://api.github.com/repos/ChromeDevTools/chrome-devtools-mcp",
+      "commit_source": "https://api.github.com/repos/ChromeDevTools/chrome-devtools-mcp/commits?per_page=1"
+    },
+    {
+      "requested_repository": "cli/cli",
+      "full_name": "cli/cli",
+      "html_url": "https://github.com/cli/cli",
+      "created_at": "2019-10-03T15:24:53Z",
+      "updated_at": "2026-10-28T04:14:50Z",
+      "pushed_at": "2026-10-28T02:11:54Z",
+      "stargazers_count": 46769,
+      "forks_count": 9221,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "trunk",
+      "description": "GitHub’s official command line tool",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "latest_default_branch_commit": {
+        "sha": "93d24ce9ffefb6cc86bde89b50271457bb0ef9cb",
+        "committer_date": "2026-10-27T14:38:50Z",
+        "author_date": "2026-10-27T14:38:50Z",
+        "html_url": "https://github.com/cli/cli/commit/93d24ce9ffefb6cc86bde89b50271457bb0ef9cb",
+        "subject": "Only save Go caches from trunk (#14840)"
+      },
+      "metadata_source": "https://api.github.com/repos/cli/cli",
+      "commit_source": "https://api.github.com/repos/cli/cli/commits?per_page=1"
+    },
+    {
+      "requested_repository": "github/github-mcp-server",
+      "full_name": "github/github-mcp-server",
+      "html_url": "https://github.com/github/github-mcp-server",
+      "created_at": "2025-03-04T16:42:04Z",
+      "updated_at": "2026-10-28T04:31:18Z",
+      "pushed_at": "2026-10-23T21:21:33Z",
+      "stargazers_count": 34017,
+      "forks_count": 5242,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "main",
+      "description": "GitHub's official MCP Server",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "latest_default_branch_commit": {
+        "sha": "f38526264abb14961b32cea386e38ec6d3cf674f",
+        "committer_date": "2026-10-22T11:24:10Z",
+        "author_date": "2026-10-22T11:24:10Z",
+        "html_url": "https://github.com/github/github-mcp-server/commit/f38526264abb14961b32cea386e38ec6d3cf674f",
+        "subject": "build(deps-dev): bump @types/node from 26.6.4 to 26.6.5 in /ui (#3516)"
+      },
+      "metadata_source": "https://api.github.com/repos/github/github-mcp-server",
+      "commit_source": "https://api.github.com/repos/github/github-mcp-server/commits?per_page=1"
+    },
+    {
+      "requested_repository": "MicrosoftDocs/mcp",
+      "full_name": "MicrosoftDocs/mcp",
+      "html_url": "https://github.com/MicrosoftDocs/mcp",
+      "created_at": "2025-06-09T03:31:49Z",
+      "updated_at": "2026-10-27T08:29:49Z",
+      "pushed_at": "2026-10-25T04:04:28Z",
+      "stargazers_count": 1956,
+      "forks_count": 278,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "main",
+      "description": "Official Microsoft Learn MCP Server and CLI tool – powering LLMs and AI agents with real-time, trusted Microsoft docs & code samples.",
+      "license": {
+        "key": "cc-by-4.0",
+        "name": "Creative Commons Attribution 4.0 International",
+        "spdx_id": "CC-BY-4.0",
+        "url": "https://api.github.com/licenses/cc-by-4.0",
+        "node_id": "MDc6TGljZW5zZTI1"
+      },
+      "latest_default_branch_commit": {
+        "sha": "f8ffde185dfd232dbf5d187c22ce299eadc3d583",
+        "committer_date": "2026-09-10T06:31:26Z",
+        "author_date": "2026-09-10T06:31:26Z",
+        "html_url": "https://github.com/MicrosoftDocs/mcp/commit/f8ffde185dfd232dbf5d187c22ce299eadc3d583",
+        "subject": "Bump @vitest/mocker and vitest in /cli (#199)"
+      },
+      "metadata_source": "https://api.github.com/repos/MicrosoftDocs/mcp",
+      "commit_source": "https://api.github.com/repos/MicrosoftDocs/mcp/commits?per_page=1"
+    },
+    {
+      "requested_repository": "microsoft/work-iq",
+      "full_name": "microsoft/work-iq",
+      "html_url": "https://github.com/microsoft/work-iq",
+      "created_at": "2026-01-20T21:49:30Z",
+      "updated_at": "2026-10-27T17:29:12Z",
+      "pushed_at": "2026-10-23T17:45:34Z",
+      "stargazers_count": 1043,
+      "forks_count": 148,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "main",
+      "description": "MCP Server and CLI for accessing Work IQ",
+      "license": {
+        "key": "other",
+        "name": "Other",
+        "spdx_id": "NOASSERTION",
+        "url": null,
+        "node_id": "MDc6TGljZW5zZTA="
+      },
+      "latest_default_branch_commit": {
+        "sha": "66f62b1467882815de4f571454c209eaac210dc8",
+        "committer_date": "2026-10-19T15:58:32Z",
+        "author_date": "2026-10-19T15:58:32Z",
+        "html_url": "https://github.com/microsoft/work-iq/commit/66f62b1467882815de4f571454c209eaac210dc8",
+        "subject": "Merge pull request #208 from ranavale/users/ranavale/businessapps-search-paths-guidance"
+      },
+      "metadata_source": "https://api.github.com/repos/microsoft/work-iq",
+      "commit_source": "https://api.github.com/repos/microsoft/work-iq/commits?per_page=1"
+    },
+    {
+      "requested_repository": "microsoftgraph/msgraph-sdk-powershell",
+      "full_name": "microsoftgraph/msgraph-sdk-powershell",
+      "html_url": "https://github.com/microsoftgraph/msgraph-sdk-powershell",
+      "created_at": "2019-03-15T08:52:40Z",
+      "updated_at": "2026-10-22T07:18:26Z",
+      "pushed_at": "2026-10-27T22:05:53Z",
+      "stargazers_count": 904,
+      "forks_count": 235,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "main",
+      "description": "Powershell SDK for Microsoft Graph",
+      "license": {
+        "key": "other",
+        "name": "Other",
+        "spdx_id": "NOASSERTION",
+        "url": null,
+        "node_id": "MDc6TGljZW5zZTA="
+      },
+      "latest_default_branch_commit": {
+        "sha": "f85309cb3f770a1583ddc3bd7522f14d23e4a7d0",
+        "committer_date": "2026-10-21T22:41:41Z",
+        "author_date": "2026-10-21T22:41:41Z",
+        "html_url": "https://github.com/microsoftgraph/msgraph-sdk-powershell/commit/f85309cb3f770a1583ddc3bd7522f14d23e4a7d0",
+        "subject": "Sign loader assembly (#3834)"
+      },
+      "metadata_source": "https://api.github.com/repos/microsoftgraph/msgraph-sdk-powershell",
+      "commit_source": "https://api.github.com/repos/microsoftgraph/msgraph-sdk-powershell/commits?per_page=1"
+    },
+    {
+      "requested_repository": "microsoft/teams.ts",
+      "full_name": "microsoft/teams.ts",
+      "html_url": "https://github.com/microsoft/teams.ts",
+      "created_at": "2025-01-23T05:34:36Z",
+      "updated_at": "2026-10-27T17:50:43Z",
+      "pushed_at": "2026-10-27T23:09:17Z",
+      "stargazers_count": 107,
+      "forks_count": 39,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "main",
+      "description": "A suite of packages used to build on the Teams Platform.",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "latest_default_branch_commit": {
+        "sha": "d9cd903e1d9382ad1609d5b58c6d5801c086a912",
+        "committer_date": "2026-10-27T17:43:25Z",
+        "author_date": "2026-10-27T17:43:25Z",
+        "html_url": "https://github.com/microsoft/teams.ts/commit/d9cd903e1d9382ad1609d5b58c6d5801c086a912",
+        "subject": "chore(deps): bump camelcase from 9.0.0 to 10.0.0 (#964)"
+      },
+      "metadata_source": "https://api.github.com/repos/microsoft/teams.ts",
+      "commit_source": "https://api.github.com/repos/microsoft/teams.ts/commits?per_page=1"
+    },
+    {
+      "requested_repository": "OfficeDev/microsoft-365-agents-toolkit",
+      "full_name": "OfficeDev/microsoft-365-agents-toolkit",
+      "html_url": "https://github.com/OfficeDev/microsoft-365-agents-toolkit",
+      "created_at": "2021-03-16T07:13:06Z",
+      "updated_at": "2026-10-28T02:05:47Z",
+      "pushed_at": "2026-10-28T04:29:56Z",
+      "stargazers_count": 784,
+      "forks_count": 318,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "dev",
+      "description": "Developer tools for building Teams apps",
+      "license": {
+        "key": "other",
+        "name": "Other",
+        "spdx_id": "NOASSERTION",
+        "url": null,
+        "node_id": "MDc6TGljZW5zZTA="
+      },
+      "latest_default_branch_commit": {
+        "sha": "edabc9b49e74ab66bc4b3b2f32cfe552a7187ff6",
+        "committer_date": "2026-10-28T02:05:39Z",
+        "author_date": "2026-10-28T02:05:39Z",
+        "html_url": "https://github.com/OfficeDev/microsoft-365-agents-toolkit/commit/edabc9b49e74ab66bc4b3b2f32cfe552a7187ff6",
+        "subject": "fix(vscuse): attempt 2 - Corrected the permission component’s hostname to `teams.microsoft.com`, allowing the existing Allow click to execute, and successfully regenerated affected plans. (#16879)"
+      },
+      "metadata_source": "https://api.github.com/repos/OfficeDev/microsoft-365-agents-toolkit",
+      "commit_source": "https://api.github.com/repos/OfficeDev/microsoft-365-agents-toolkit/commits?per_page=1"
+    },
+    {
+      "requested_repository": "microsoft/Agent365-devTools",
+      "full_name": "microsoft/Agent365-devTools",
+      "html_url": "https://github.com/microsoft/Agent365-devTools",
+      "created_at": "2025-11-05T04:45:37Z",
+      "updated_at": "2026-10-21T16:38:16Z",
+      "pushed_at": "2026-10-21T16:40:23Z",
+      "stargazers_count": 61,
+      "forks_count": 36,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "main",
+      "description": "The Microsoft Agent 365 DevTools CLI is a command-line interface tool designed to streamline the development, deployment, and management of Microsoft Agent 365 applications.",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "latest_default_branch_commit": {
+        "sha": "4fd85ec798a096d5b5c2c2591fd301dea27c8098",
+        "committer_date": "2026-10-21T16:38:10Z",
+        "author_date": "2026-10-21T16:38:10Z",
+        "html_url": "https://github.com/microsoft/Agent365-devTools/commit/4fd85ec798a096d5b5c2c2591fd301dea27c8098",
+        "subject": "Pin GitHub Actions to full-length commit SHAs (#506)"
+      },
+      "metadata_source": "https://api.github.com/repos/microsoft/Agent365-devTools",
+      "commit_source": "https://api.github.com/repos/microsoft/Agent365-devTools/commits?per_page=1"
+    },
+    {
+      "requested_repository": "Azure/azure-cli",
+      "full_name": "Azure/azure-cli",
+      "html_url": "https://github.com/Azure/azure-cli",
+      "created_at": "2016-02-04T00:21:51Z",
+      "updated_at": "2026-10-27T15:12:01Z",
+      "pushed_at": "2026-10-27T20:16:09Z",
+      "stargazers_count": 4657,
+      "forks_count": 3522,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "dev",
+      "description": "Azure Command-Line Interface",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "latest_default_branch_commit": {
+        "sha": "af86318e68be54c937fa0012c3a18a99222ee3fa",
+        "committer_date": "2026-10-27T06:13:26Z",
+        "author_date": "2026-10-27T06:13:26Z",
+        "html_url": "https://github.com/Azure/azure-cli/commit/af86318e68be54c937fa0012c3a18a99222ee3fa",
+        "subject": "{Release} Upgrade to Azure CLI 2.92.0 (#34282)"
+      },
+      "metadata_source": "https://api.github.com/repos/Azure/azure-cli",
+      "commit_source": "https://api.github.com/repos/Azure/azure-cli/commits?per_page=1"
+    },
+    {
+      "requested_repository": "microsoft/mcp",
+      "full_name": "microsoft/mcp",
+      "html_url": "https://github.com/microsoft/mcp",
+      "created_at": "2025-04-09T04:12:30Z",
+      "updated_at": "2026-10-28T02:37:55Z",
+      "pushed_at": "2026-10-27T23:52:12Z",
+      "stargazers_count": 3803,
+      "forks_count": 665,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "main",
+      "description": "Catalog of official Microsoft MCP (Model Context Protocol) server implementations for AI-powered data access and tool integration",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "latest_default_branch_commit": {
+        "sha": "3f9f1899ec4bf95460c41a0ad530ed8d76700c4d",
+        "committer_date": "2026-10-27T23:52:09Z",
+        "author_date": "2026-10-27T23:52:09Z",
+        "html_url": "https://github.com/microsoft/mcp/commit/3f9f1899ec4bf95460c41a0ad530ed8d76700c4d",
+        "subject": "Sync eng/common directory with azure-sdk-tools for PR 17367 (#4042)"
+      },
+      "metadata_source": "https://api.github.com/repos/microsoft/mcp",
+      "commit_source": "https://api.github.com/repos/microsoft/mcp/commits?per_page=1"
+    },
+    {
+      "requested_repository": "pnp/cli-microsoft365",
+      "full_name": "pnp/cli-microsoft365",
+      "html_url": "https://github.com/pnp/cli-microsoft365",
+      "created_at": "2017-10-12T17:18:21Z",
+      "updated_at": "2026-10-26T19:36:34Z",
+      "pushed_at": "2026-10-23T22:35:37Z",
+      "stargazers_count": 1471,
+      "forks_count": 413,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "main",
+      "description": "Manage Microsoft 365 and SharePoint Framework projects on any platform",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "latest_default_branch_commit": {
+        "sha": "41515e723c0ce7dafb33245178681a037ee30e32",
+        "committer_date": "2026-10-23T22:35:24Z",
+        "author_date": "2026-10-23T22:35:24Z",
+        "html_url": "https://github.com/pnp/cli-microsoft365/commit/41515e723c0ce7dafb33245178681a037ee30e32",
+        "subject": "Updates release notes"
+      },
+      "metadata_source": "https://api.github.com/repos/pnp/cli-microsoft365",
+      "commit_source": "https://api.github.com/repos/pnp/cli-microsoft365/commits?per_page=1"
+    },
+    {
+      "requested_repository": "pnp/cli-microsoft365-mcp-server",
+      "full_name": "pnp/cli-microsoft365-mcp-server",
+      "html_url": "https://github.com/pnp/cli-microsoft365-mcp-server",
+      "created_at": "2025-04-17T22:17:50Z",
+      "updated_at": "2026-10-22T16:16:11Z",
+      "pushed_at": "2026-10-13T21:36:21Z",
+      "stargazers_count": 135,
+      "forks_count": 29,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "main",
+      "description": "Manage Microsoft 365 using MCP server",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "latest_default_branch_commit": {
+        "sha": "9b6863daef5bb093c70540479092a8c160a657be",
+        "committer_date": "2026-10-12T21:58:08Z",
+        "author_date": "2026-10-12T21:58:08Z",
+        "html_url": "https://github.com/pnp/cli-microsoft365-mcp-server/commit/9b6863daef5bb093c70540479092a8c160a657be",
+        "subject": "Releases v0.1.25"
+      },
+      "metadata_source": "https://api.github.com/repos/pnp/cli-microsoft365-mcp-server",
+      "commit_source": "https://api.github.com/repos/pnp/cli-microsoft365-mcp-server/commits?per_page=1"
+    },
+    {
+      "requested_repository": "microsoftgraph/msgraph-cli",
+      "full_name": "microsoftgraph/msgraph-cli",
+      "html_url": "https://github.com/microsoftgraph/msgraph-cli",
+      "created_at": "2021-11-26T13:56:50Z",
+      "updated_at": "2026-09-29T16:18:54Z",
+      "pushed_at": "2025-08-29T22:51:59Z",
+      "stargazers_count": 132,
+      "forks_count": 22,
+      "archived": true,
+      "disabled": false,
+      "default_branch": "main",
+      "description": "CLI tool for Microsoft Graph based on .NET",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "latest_default_branch_commit": {
+        "sha": "5233f10a6e8d85d9b0a7692f9c2d08a62ae0485a",
+        "committer_date": "2025-06-11T14:03:50Z",
+        "author_date": "2025-06-11T14:03:50Z",
+        "html_url": "https://github.com/microsoftgraph/msgraph-cli/commit/5233f10a6e8d85d9b0a7692f9c2d08a62ae0485a",
+        "subject": "Merge pull request #572 from microsoftgraph/dependabot/github_actions/stefanzweifel/git-auto-commit-action-6"
+      },
+      "metadata_source": "https://api.github.com/repos/microsoftgraph/msgraph-cli",
+      "commit_source": "https://api.github.com/repos/microsoftgraph/msgraph-cli/commits?per_page=1"
+    },
+    {
+      "requested_repository": "microsoft/teams-sdk",
+      "full_name": "microsoft/teams-sdk",
+      "html_url": "https://github.com/microsoft/teams-sdk",
+      "created_at": "2023-02-06T18:03:17Z",
+      "updated_at": "2026-10-27T22:50:53Z",
+      "pushed_at": "2026-10-27T23:07:20Z",
+      "stargazers_count": 732,
+      "forks_count": 270,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "main",
+      "description": "SDK focused on building AI based applications and extensions for Microsoft Teams and other Bot Framework channels",
+      "license": {
+        "key": "mit",
+        "name": "MIT License",
+        "spdx_id": "MIT",
+        "url": "https://api.github.com/licenses/mit",
+        "node_id": "MDc6TGljZW5zZTEz"
+      },
+      "latest_default_branch_commit": {
+        "sha": "a5af5fa5fe3d0afda6490373d4bc466ef3597694",
+        "committer_date": "2026-10-27T22:50:45Z",
+        "author_date": "2026-10-27T22:50:45Z",
+        "html_url": "https://github.com/microsoft/teams-sdk/commit/a5af5fa5fe3d0afda6490373d4bc466ef3597694",
+        "subject": "fix(ci): decouple required status checks from path filters (#3054)"
+      },
+      "metadata_source": "https://api.github.com/repos/microsoft/teams-sdk",
+      "commit_source": "https://api.github.com/repos/microsoft/teams-sdk/commits?per_page=1",
+      "retrieved_at_utc": "2026-10-28T04:55:48.756498+00:00"
+    },
+    {
+      "requested_repository": "microsoft/wiqd",
+      "full_name": "microsoft/wiqd",
+      "html_url": "https://github.com/microsoft/wiqd",
+      "created_at": "2026-05-28T02:25:18Z",
+      "updated_at": "2026-10-26T13:49:21Z",
+      "pushed_at": "2026-10-26T15:33:39Z",
+      "stargazers_count": 40,
+      "forks_count": 9,
+      "archived": false,
+      "disabled": false,
+      "default_branch": "main",
+      "description": "The agentic experience for developers building, debugging, validating, publishing and monitoring declarative agents for Work IQ",
+      "license": {
+        "key": "other",
+        "name": "Other",
+        "spdx_id": "NOASSERTION",
+        "url": null,
+        "node_id": "MDc6TGljZW5zZTA="
+      },
+      "latest_default_branch_commit": {
+        "sha": "1f226f5a31cca3e3c99781b031c8958c35614f7b",
+        "committer_date": "2026-10-26T13:49:14Z",
+        "author_date": "2026-10-26T13:49:14Z",
+        "html_url": "https://github.com/microsoft/wiqd/commit/1f226f5a31cca3e3c99781b031c8958c35614f7b",
+        "subject": "Merge pull request #76 from microsoft/chore/sync-public-mirror-v0.21.0"
+      },
+      "metadata_source": "https://api.github.com/repos/microsoft/wiqd",
+      "commit_source": "https://api.github.com/repos/microsoft/wiqd/commits?per_page=1",
+      "retrieved_at_utc": "2026-10-28T04:58:28.312898+00:00"
+    }
+  ],
+  "collection_completed_at_utc": "2026-10-28T04:58:28.312898+00:00"
+}

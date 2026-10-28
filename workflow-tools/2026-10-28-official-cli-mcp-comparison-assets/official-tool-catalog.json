@@ -1,0 +1,267 @@
+[
+  {
+    "name": "Playwright CLI",
+    "repo": "microsoft/playwright-cli",
+    "publisher": "Microsoft",
+    "kind": "CLI",
+    "open_source": "Yes — Apache-2.0",
+    "purpose": "Control a browser through shell commands and page snapshots.",
+    "target_users": "Coding agents, browser automation developers, and test engineers.",
+    "access": "No Graph app registration for browser use. Teams still requires your account and permitted sign-in.",
+    "limitations": "Teams reading is a proposed browser workflow. It must expand replies and load older posts. UI changes can break collection.",
+    "fit": "Start here — read Issue Task and retain original post links.",
+    "rating": "High",
+    "scope_note": "CLI repository age includes earlier project history. Creation is not the launch date of the current agent CLI.",
+    "sources": [
+      "https://playwright.dev/agent-cli/introduction",
+      "https://playwright.dev/agent-cli/sessions",
+      "https://github.com/microsoft/playwright-cli/blob/main/LICENSE"
+    ]
+  },
+  {
+    "name": "Playwright MCP",
+    "repo": "microsoft/playwright-mcp",
+    "publisher": "Microsoft",
+    "kind": "MCP",
+    "open_source": "Yes — Apache-2.0",
+    "purpose": "Expose browser navigation and interaction as MCP tools.",
+    "target_users": "AI users whose host supports MCP browser tools.",
+    "access": "Uses a browser session. Connecting to an existing browser requires its supported connection setup.",
+    "limitations": "Needs an MCP host and a browser. Its Teams history coverage needs the same validation as CLI automation.",
+    "fit": "Useful alternative to Playwright CLI when the AI host works better with MCP.",
+    "rating": "High",
+    "scope_note": "Repository statistics describe the public MCP implementation, not a hosted service.",
+    "sources": [
+      "https://github.com/microsoft/playwright-mcp",
+      "https://github.com/microsoft/playwright-mcp/blob/main/LICENSE"
+    ]
+  },
+  {
+    "name": "GitHub CLI",
+    "repo": "cli/cli",
+    "publisher": "GitHub",
+    "kind": "CLI (gh)",
+    "open_source": "Yes — MIT",
+    "purpose": "Query PRs, reviews, Actions runs, failed logs, artifacts, and GitHub APIs.",
+    "target_users": "Developers, maintainers, CI engineers, and shell-capable AI agents.",
+    "access": "GitHub sign-in or a suitable token. Repository and organization policies apply.",
+    "limitations": "API permissions, rate limits, pagination, and artifact retention still apply. It does not read Teams.",
+    "fit": "Daily use — correlate Teams failure reports with CUBRID PRs and exact CI runs. Already available on this server.",
+    "rating": "High",
+    "scope_note": "Statistics describe the GitHub CLI implementation.",
+    "sources": [
+      "https://cli.github.com/manual/",
+      "https://cli.github.com/manual/gh_run_view",
+      "https://github.com/cli/cli/blob/trunk/LICENSE"
+    ]
+  },
+  {
+    "name": "GitHub MCP Server",
+    "repo": "github/github-mcp-server",
+    "publisher": "GitHub",
+    "kind": "MCP (local or hosted)",
+    "open_source": "Yes — MIT server implementation",
+    "purpose": "Give AI structured access to repositories, PRs, issues, reviews, and Actions.",
+    "target_users": "Developers using an MCP-compatible assistant.",
+    "access": "GitHub OAuth, a suitable token, or another documented server authentication method. Host and organization policies apply.",
+    "limitations": "Configured tools and token permissions bound access. A host may already provide equivalent GitHub tools.",
+    "fit": "High when GitHub tools are missing from the AI host. This conversation already has a GitHub connection.",
+    "rating": "High",
+    "scope_note": "Public server source is MIT. Hosted deployment and GitHub platform access remain services.",
+    "sources": [
+      "https://github.com/github/github-mcp-server",
+      "https://github.com/github/github-mcp-server/blob/main/docs/host-integration.md",
+      "https://github.com/github/github-mcp-server/blob/main/LICENSE"
+    ]
+  },
+  {
+    "name": "Microsoft Learn CLI + MCP",
+    "repo": "MicrosoftDocs/mcp",
+    "publisher": "Microsoft",
+    "kind": "CLI (mslearn) + hosted MCP",
+    "open_source": "CLI code: MIT. Documentation: CC-BY-4.0. Hosted server implementation: not established as public source.",
+    "purpose": "Search official Microsoft documentation, fetch articles, and find code samples.",
+    "target_users": "Developers and agents working with Microsoft products and APIs.",
+    "access": "Public documentation service. No sign-in or API key. The MCP endpoint has no service charge.",
+    "limitations": "Public Microsoft documentation only. It cannot read private Teams posts, company files, or CUBRID's local manual.",
+    "fit": "Useful now — verify Teams, Graph, authentication, and Azure instructions while building integrations.",
+    "rating": "High for Microsoft integration work",
+    "scope_note": "Shared CLI, documentation, and plugin repository. Repository activity is not the deployment date of the hosted MCP service.",
+    "sources": [
+      "https://github.com/MicrosoftDocs/mcp",
+      "https://learn.microsoft.com/en-us/training/support/mcp",
+      "https://github.com/MicrosoftDocs/mcp/blob/main/cli/package.json",
+      "https://github.com/MicrosoftDocs/mcp/blob/main/LICENSE-CODE",
+      "https://github.com/MicrosoftDocs/mcp/blob/main/LICENSE"
+    ]
+  },
+  {
+    "name": "Chrome DevTools for agents",
+    "repo": "ChromeDevTools/chrome-devtools-mcp",
+    "publisher": "Google / Chrome DevTools",
+    "kind": "CLI (chrome-devtools) + MCP",
+    "open_source": "Yes — Apache-2.0",
+    "purpose": "Inspect browser console errors, network requests, performance traces, and page behavior.",
+    "target_users": "Web developers and agents diagnosing browser problems.",
+    "access": "A Chrome instance. Existing-session attachment needs remote debugging setup and browser permission.",
+    "limitations": "Official browser support is Chrome. It diagnoses browser performance, not CUBRID engine performance. Usage statistics are on by default.",
+    "fit": "Useful backup — diagnose Teams Web or QA portal automation when browser behavior is unclear.",
+    "rating": "Medium",
+    "scope_note": "CLI and MCP ship from the same repository and package.",
+    "sources": [
+      "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+      "https://developer.chrome.com/docs/devtools/agents/get-started/configuration",
+      "https://github.com/ChromeDevTools/chrome-devtools-mcp/blob/main/LICENSE"
+    ]
+  },
+  {
+    "name": "Work IQ CLI + MCP",
+    "repo": "microsoft/work-iq",
+    "publisher": "Microsoft",
+    "kind": "CLI (workiq) + MCP",
+    "open_source": "Public plugin/skill repository: MIT. Work IQ CLI and service: proprietary / EULA.",
+    "purpose": "Retrieve Microsoft 365 work context, including Teams messages, email, meetings, and documents.",
+    "target_users": "Employees and AI developers using approved Microsoft 365 integrations.",
+    "access": "Microsoft Entra tenant consent and configured usage billing. Uses the signed-in user's permitted data.",
+    "limitations": "Company enablement is required. Natural-language answers do not prove a complete channel archive. Delegated authentication constrains unattended operation.",
+    "fit": "Consider after company enablement — convenient cross-source summaries without maintaining a browser collector.",
+    "rating": "Conditional",
+    "scope_note": "Stars and dates describe the public plugin repository, not the proprietary CLI implementation or hosted service.",
+    "sources": [
+      "https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/work-iq/cli",
+      "https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/work-iq/api-overview",
+      "https://github.com/microsoft/work-iq/blob/main/LICENSE"
+    ]
+  },
+  {
+    "name": "Microsoft Graph PowerShell",
+    "repo": "microsoftgraph/msgraph-sdk-powershell",
+    "publisher": "Microsoft Graph",
+    "kind": "Command-line SDK / PowerShell cmdlets",
+    "open_source": "Yes — MIT (verified license text)",
+    "purpose": "Call Microsoft Graph with structured commands, including Teams channel messages and replies.",
+    "target_users": "Microsoft 365 developers, administrators, and automation engineers.",
+    "access": "PowerShell and an approved Graph identity. Channel reading requires the applicable Graph permissions and consent.",
+    "limitations": "Requires explicit pagination, reply collection, and update handling. A command-line wrapper does not remove Graph consent requirements.",
+    "fit": "Useful after approval — build a structured collector when browser extraction becomes insufficient.",
+    "rating": "Conditional",
+    "scope_note": "GitHub's SPDX detector returned NOASSERTION. The actual LICENSE.txt states MIT.",
+    "sources": [
+      "https://learn.microsoft.com/en-us/powershell/microsoftgraph/overview",
+      "https://learn.microsoft.com/en-us/graph/api/channel-list-messages?view=graph-rest-1.0",
+      "https://github.com/microsoftgraph/msgraph-sdk-powershell/blob/main/LICENSE.txt"
+    ]
+  },
+  {
+    "name": "Teams Developer CLI",
+    "repo": "microsoft/teams-sdk",
+    "publisher": "Microsoft Teams",
+    "kind": "CLI (teams / @microsoft/teams.cli)",
+    "open_source": "Yes — MIT CLI package",
+    "purpose": "Create Teams app projects, register agents, configure endpoints, and diagnose app setup.",
+    "target_users": "Developers building a Teams app or bot.",
+    "access": "Teams sign-in and permission to create and install the intended app. Extra Graph scopes require their own consent.",
+    "limitations": "It manages Teams app development. It does not itself provide a ready-made archive of existing channel messages.",
+    "fit": "Later — useful if you turn the Issue Task reader into a shared Teams bot.",
+    "rating": "Low for the current task",
+    "scope_note": "Shared Teams SDK repository. CLI source is under packages/cli. Dates are not the CLI launch date.",
+    "sources": [
+      "https://github.com/microsoft/teams-sdk/tree/main/packages/cli",
+      "https://github.com/microsoft/teams-sdk/blob/main/packages/cli/package.json",
+      "https://devblogs.microsoft.com/microsoft365dev/from-prompt-to-production-teams-agent-setup-simplified/"
+    ]
+  },
+  {
+    "name": "Microsoft 365 Agents Toolkit CLI",
+    "repo": "OfficeDev/microsoft-365-agents-toolkit",
+    "publisher": "Microsoft / OfficeDev",
+    "kind": "CLI (atk)",
+    "open_source": "Yes — MIT (verified license text)",
+    "purpose": "Scaffold, provision, package, test, and publish Microsoft 365 apps and agents.",
+    "target_users": "Developers building Microsoft 365 or Copilot applications.",
+    "access": "Microsoft 365 development permissions. Azure credentials and resources apply when the chosen project uses Azure.",
+    "limitations": "Project-development tooling adds little to a personal channel-reading workflow. Deployment and Graph permissions still need approval.",
+    "fit": "Later — use only when building a maintained Microsoft 365 application.",
+    "rating": "Low for the current task",
+    "scope_note": "Toolkit monorepo, including extension and CLI history. GitHub's SPDX detector returned NOASSERTION despite MIT license text.",
+    "sources": [
+      "https://learn.microsoft.com/en-us/microsoftteams/platform/toolkit/teams-toolkit-cli",
+      "https://github.com/OfficeDev/microsoft-365-agents-toolkit/blob/dev/LICENSE"
+    ]
+  },
+  {
+    "name": "Agent 365 CLI",
+    "repo": "microsoft/Agent365-devTools",
+    "publisher": "Microsoft",
+    "kind": "CLI (a365)",
+    "open_source": "Yes — MIT CLI source",
+    "purpose": "Create and manage enterprise agent identities, blueprints, deployment, and governance setup.",
+    "target_users": "Enterprise agent developers and tenant administrators.",
+    "access": "Agent 365 tenant setup, suitable Entra roles, and capability-specific consent or licensing. Azure deployment requires Azure access.",
+    "limitations": "The setup cost is substantial for a personal reader. The open-source CLI does not make the backing platform unrestricted or free.",
+    "fit": "Skip initially — relevant if CUBRID adopts managed enterprise agents.",
+    "rating": "Low",
+    "scope_note": "Statistics describe the public development CLI, not the enterprise Agent 365 service.",
+    "sources": [
+      "https://learn.microsoft.com/en-us/microsoft-agent-365/developer/agent-365-cli",
+      "https://learn.microsoft.com/en-us/microsoft-agent-365/developer/get-started",
+      "https://github.com/microsoft/Agent365-devTools/blob/main/LICENSE"
+    ]
+  },
+  {
+    "name": "Azure CLI",
+    "repo": "Azure/azure-cli",
+    "publisher": "Microsoft Azure",
+    "kind": "CLI (az)",
+    "open_source": "Yes — MIT",
+    "purpose": "Inspect and manage Azure resources, identities, deployments, and cloud configuration.",
+    "target_users": "Azure developers, operators, and infrastructure automation engineers.",
+    "access": "Azure sign-in and the required resource permissions. Provisioned Azure services can incur charges.",
+    "limitations": "Azure scope. It does not provide a direct Teams channel-reading command.",
+    "fit": "Optional — useful if the collector or bot is hosted on Azure.",
+    "rating": "Low unless you use Azure",
+    "scope_note": "Statistics describe Azure CLI, not every optional extension or Azure service.",
+    "sources": [
+      "https://learn.microsoft.com/en-us/cli/azure/what-is-azure-cli",
+      "https://github.com/Azure/azure-cli/blob/dev/LICENSE"
+    ]
+  },
+  {
+    "name": "Azure MCP Server",
+    "repo": "microsoft/mcp",
+    "publisher": "Microsoft Azure",
+    "kind": "MCP",
+    "open_source": "Yes — MIT",
+    "purpose": "Expose Azure resource and service operations as tools for AI agents.",
+    "target_users": "Developers and operators who use AI to work with Azure.",
+    "access": "Azure credentials and the required resource permissions. Backing cloud services can incur charges.",
+    "limitations": "Azure operations, rather than Microsoft 365 channel history. Available tools depend on configuration and identity.",
+    "fit": "Optional — useful only if Azure becomes part of your CUBRID infrastructure workflow.",
+    "rating": "Low unless you use Azure",
+    "scope_note": "Shared Microsoft MCP monorepo. Stars and commit dates cover more than the Azure MCP component.",
+    "sources": [
+      "https://github.com/microsoft/mcp",
+      "https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/overview",
+      "https://github.com/microsoft/mcp/blob/main/LICENSE"
+    ]
+  },
+  {
+    "name": "Work IQ Developer Tools",
+    "repo": "microsoft/wiqd",
+    "publisher": "Microsoft",
+    "kind": "CLI (wiqd)",
+    "open_source": "CLI source unavailable during preview. Public repository and distributed package declare MIT.",
+    "purpose": "Create, validate, evaluate, provision, and publish Microsoft 365 Copilot plugins and agents.",
+    "target_users": "Developers building Copilot extensions and their delivery workflows.",
+    "access": "Microsoft 365 tenant access and provisioning entitlements. The announcement requires a Copilot license for provisioning.",
+    "limitations": "Experimental preview with no official product support. CLI source remains private. The installer uses Agents Toolkit as a dependency.",
+    "fit": "Later — relevant if you develop a Copilot plugin. It adds little to reading existing Issue Task posts.",
+    "rating": "Low for the current task",
+    "scope_note": "Public documentation, download, and metadata repository. Its MIT license does not provide the private CLI source.",
+    "sources": [
+      "https://github.com/microsoft/wiqd",
+      "https://github.com/microsoft/wiqd/blob/main/README.md",
+      "https://devblogs.microsoft.com/microsoft365dev/announcing-the-preview-of-the-work-iq-developer-tools/"
+    ]
+  }
+]
