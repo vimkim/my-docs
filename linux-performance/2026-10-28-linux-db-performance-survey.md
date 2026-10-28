@@ -1,8 +1,10 @@
 # Linux에서 DB·시스템 소프트웨어 성능을 측정하는 방법
 
-조사 기준일: **2026-10-28**. Linux 호스트의 sudo 권한이 있고, 필요한 커널 설정·모듈·빌드까지 바꿀 수 있는 개발 환경을 가정한다. 특정 배포판·CPU·DBMS에 한정하지 않는다. 이 문서는 공식 문서와 도구의 원본 소스를 조사한 **선택 가이드**이며, 현재 서버에 도구를 설치하거나 커널을 변경하거나 벤치마크를 실행한 결과는 아니다.
+조사 기준일: **2026-10-28**. Linux 호스트의 sudo 권한이 있고, 필요한 커널 설정·모듈·빌드까지 바꿀 수 있는 개발 환경을 가정한다. 특정 배포판·CPU·DBMS에 한정하지 않는다. 이 문서는 공식 문서와 도구의 원본 소스를 바탕으로 구성한 **진단 절차와 도구 선택 가이드**다. 현재 서버에 도구를 설치하거나 커널을 변경하거나 벤치마크를 실행한 결과는 아니다.
 
-**처음에는 `perf stat` + `perf record` + `pidstat` + `iostat` + DB 내부 통계를 함께 사용한다.** 실행 시간이 늘어난 이유가 CPU 작업 증가인지, CPU 효율 저하인지, 대기 증가인지 구분한 뒤 아래 표의 전문 도구를 선택한다. 이 선택 순서와 오버헤드 평가는 조사 내용을 바탕으로 한 실무적 판단이며, 도구 간 실측 순위가 아니다.
+**먼저 증상과 완료 작업량을 정의하고, 호스트 오류와 자원 상태를 확인한다.** DB 내부 통계와 `pidstat`·`iostat`·소수 이벤트의 `perf stat`을 이용해 CPU 작업 증가, CPU 효율 저하, 대기 증가를 구분한다. CPU 호출 경로가 필요하면 `perf record`로 이어간다. 이 선택 순서와 오버헤드 평가는 실무적 판단이며, 도구 간 실측 순위가 아니다.
+
+[가설과 실험으로 원인을 좁히는 예제](2026-10-28-performance-investigation-walkthrough.md)는 같은 완료량의 비용 비교, 반증 조건, 요청과 OS 측정의 연결, 결론 작성까지 보여 준다. 예제 수치는 설명용으로 구성했다.
 
 소스를 수정하고 다시 빌드할 수 있다면 [Linux C++ 디버깅·성능 실험 가이드](2026-10-28-cpp-debug-benchmark-workflow.md)로 이어간다. 빌드 구성, GDB·sanitizer, 함수 벤치마크, 직접 계측과 코드 변경 전후의 검증 절차를 다룬다.
 
@@ -20,6 +22,38 @@
 | 가끔만 긴 지연이 발생하는가 | 요청별 latency와 같은 구간의 OS·DB 지표 | 이벤트 trace, scheduler·IRQ trace, rtla | commit p99와 writeback·scheduler 지연 상관 확인 |
 
 도구 기능의 근거는 3절의 각 행에 연결했다. 위 표의 도구 조합은 관측 대상을 좁히기 위한 제안이다.
+
+### 1.1 도구를 실행하기 전에 정할 조사 순서
+
+1. **문제를 수치로 쓴다.** 어느 입력·동시성에서 어떤 지표가 얼마나 변했는지 적는다. 기준선과 후보의 정확성·성공 완료량을 먼저 맞춘다.
+2. **호스트 상태를 확인한다.** 5.1절의 kernel 오류, 메모리, CPU별 상태와 I/O를 본다. 요청 오류·retry·timeout도 같은 구간에서 확인한다.
+3. **자원과 thread 시간을 나누어 본다.** 아래 USE 표를 채우고, 요청을 처리하는 thread의 실행·CPU 배정 대기·blocking·유휴 시간을 구분한다.
+4. **경쟁하는 가설을 쓴다.** 예: 코드 작업량 증가, 메모리 stall 증가, CPU 배정 지연. 각 가설이 맞을 때 변할 지표와 반증할 관측을 적는다.
+5. **가설을 구분할 최소 측정을 한다.** 함수 profile, 요청 timer, run queue, FS·block trace 중 필요한 경계만 고른다. 측정 범위·누락·계측 부하를 함께 남긴다.
+6. **한 가지 변경으로 예측을 검증한다.** 7절 형식으로 반복 A/B와 원본을 남긴다. 목표 지표·정확성·오류·tail을 원래 실행 조건에서 다시 확인한다.
+
+벤치마크 결과에는 **현재 성능을 제한하는 것으로 의심되는 요인과 근거**를 적는다. client CPU나 quota가 제한한 결과를 엔진 경로의 처리 능력으로 해석하지 않는다. 원인이 확정되지 않으면 후보와 다음 구분 실험을 남긴다. [Active benchmarking](https://www.brendangregg.com/activebenchmarking.html).
+
+### 1.2 자원별 USE 확인표
+
+USE는 자원별 **사용 정도(utilization), 처리하지 못한 수요(saturation), 오류(errors)**를 확인하는 방법이다. 아래는 DB 개발용 시작 표다. 각 칸에 값·단위·측정 구간·원본 위치를 기록한다. 확인할 수 없는 칸은 `unknown`과 사유를 남긴다. [USE method](https://www.brendangregg.com/usemethod.html), [Linux 확인표](https://www.brendangregg.com/USEmethod/use-linux.html).
+
+| 자원 | 사용 정도 | 처리하지 못한 수요 | 오류·실패 |
+| --- | --- | --- | --- |
+| CPU·CPU quota | CPU별·thread별 실행 시간, `cpu.stat` | run queue·배정 지연, throttling 변화 | kernel hardware 오류, 관측 가능한 제한 관련 실패 |
+| 메모리 용량 | `MemAvailable`, RSS/PSS, cgroup memory | reclaim·swap·memory PSI | OOM·할당 실패, `memory.events` |
+| 저장장치·FS | IOPS·bytes·busy, 공간·inode 사용 | queue·await·I/O PSI, 요청별 latency | I/O 오류·reset, 공간 부족, DB I/O 실패 |
+| 네트워크 | 인터페이스별 bytes/초와 용량 | 송수신 queue·drop·처리 지연 | NIC 오류·TCP 재전송·연결 실패 |
+| 메모리·I/O interconnect | 지원되는 대역폭·uncore 계수 | 지원 도구의 stall·혼잡 지표 | 플랫폼이 제공하는 오류 계수·로그 |
+| DB 내부·소프트웨어 제한 | worker·connection·FD·lock 사용 | 대기열·대기시간, 제한까지 남은 여유 | 거절·timeout·retry·FD 할당 실패 |
+
+이 표는 원인 후보를 찾는 출발점이다. device busy와 최대 처리량을 같게 보거나, 연결 수를 CPU 사용률처럼 해석하지 않는다. 오류 누적값은 같은 구간의 변화량을 보고, 로그에 오류가 없다는 사실만으로 모든 오류를 배제하지 않는다.
+
+### 1.3 요청과 관련된 thread 시간을 확인한다
+
+`perf record`의 CPU stack, `perf sched`의 배정 지연, off-CPU stack, DB wait를 함께 해석한다. **일을 기다리는 유휴 worker**와 **진행 중인 요청을 지연시키는 wait**를 구분한다. 요청 ID·worker 상태·단계 timer가 이 구분에 필요할 수 있다. [Thread State Analysis](https://www.brendangregg.com/tsamethod.html), [off-CPU 분석](https://www.brendangregg.com/offcpuanalysis.html).
+
+여러 thread의 CPU·wait 합계를 요청 elapsed에서 단순히 빼지 않는다. 병렬 실행과 겹치는 구간이 있기 때문이다. 요청, 함수, syscall, FS, block I/O는 각각 시작·완료 경계가 다르다. [경계별 해석 예](2026-10-28-performance-investigation-walkthrough.md#5-요청과-os-사건의-측정-경계를-맞춘다)를 따라 필요한 연결 정보를 선택한다.
 
 ## 2. 전권으로 가능한 것과 여전히 필요한 조건
 
@@ -100,6 +134,8 @@ DB buffer pool hit, Linux page-cache hit, CPU cache hit는 서로 다른 계층�
 
 ### 3.5 메모리·NUMA·할당·실행 시뮬레이션
 
+프로세스 heap이나 RSS로 설명되지 않는 host 메모리 증가는 kernel slab도 확인한다. `/proc/meminfo`의 `Slab`, `SReclaimable`, `SUnreclaim`과 `slabtop -o`를 비교한다. `slabtop`의 cache 크기를 곧바로 회수 가능한 메모리나 누수 크기로 해석하지 않는다. [proc 메모리 통계](https://docs.kernel.org/filesystems/proc.html), [slabtop](https://man7.org/linux/man-pages/man1/slabtop.1.html).
+
 | 번호·옵션 | 얻는 정보와 DB 활용 | 전권으로 활용하는 범위·전제 | 오버헤드·해석 한계 | 원문 |
 | --- | --- | --- | --- | --- |
 | 34. `numastat`·`/proc/PID/numa_maps`·`numactl` | node별 메모리 배치·할당 통계. buffer pool의 NUMA 배치 확인 | 타 PID 조회, CPU·메모리 정책을 통제한 실험 가능 | 조회는 낮음. 배치 통계는 실제 원격 load 횟수가 아니다. `numactl`의 바인딩은 관찰이 아니라 실험 조건 변경이다 | [numactl](https://github.com/numactl/numactl), [numa_maps](https://man7.org/linux/man-pages/man5/proc_pid_numa_maps.5.html) |
@@ -163,6 +199,24 @@ ps -L -p "$DBPID" -o pid,tid,psr,comm
 ```
 
 여러 독립 worker 프로세스를 쓰는 DB는 필요한 PID 목록이나 전용 cgroup을 대상으로 삼는다. 이미 존재하는 서버를 client 명령의 자식으로 취급하지 않는다. CPU·system-wide·PID 범위는 [perf stat](https://man7.org/linux/man-pages/man1/perf-stat.1.html)을 따른다.
+
+아래는 **같은 서버에서 실행하는 초기 상태 확인 예**다. journal은 systemd가 있는 현재 boot의 최근 10분을 가정한다. 실제 문제 시간과 boot가 다르면 그 범위로 바꾼다. 도구·권한이 없으면 빈 결과를 정상으로 해석하지 말고 `unknown`으로 남긴다.
+
+```bash
+date --iso-8601=seconds
+uptime
+journalctl -k -b --since '10 minutes ago' --no-pager
+free -m
+vmstat 1 5
+mpstat -P ALL 1 5
+sar -n DEV,EDEV,TCP,ETCP 1 5
+
+# 메모리 증가를 heap으로 설명할 수 없을 때 추가한다.
+rg '^(MemAvailable|Slab|SReclaimable|SUnreclaim):' /proc/meminfo
+slabtop -o
+```
+
+`free`는 `free`뿐 아니라 `available` 추정을 본다. `vmstat` 첫 보고서의 일부 값은 boot 이후 평균이다. 위 명령은 서로 다른 시점의 상태를 순서대로 읽는다. 인과관계를 비교할 실행에서는 시작·끝 시간을 맞춘 5.3절 수집과 DB 통계를 사용한다. kernel 오류는 [journalctl](https://man7.org/linux/man-pages/man1/journalctl.1.html), 메모리 열은 [free](https://man7.org/linux/man-pages/man1/free.1.html)의 정의를 따른다.
 
 ### 5.2 전체 수치와 CPU profile
 
@@ -232,6 +286,24 @@ sudo trace-cmd report -i sched-trace.dat > sched-trace.txt
 
 이 예는 scheduler 이벤트만 짧게 수집한다. FS·block·IRQ로 확장할 때는 현재 커널에 존재하는 이벤트와 필드를 확인하고 필터를 추가한다. 기존 수집 세션이 있다면 trace instance·설정 충돌도 먼저 확인한다. 원격 서버에서 GUI를 실행할 필요는 없다. [trace-cmd record](https://www.trace-cmd.org/Documentation/trace-cmd/trace-cmd-record.1.html).
 
+### 5.6 CPU FlameGraph까지 생성한다
+
+**실행 위치:** 5.2절의 단일 `cycles` 이벤트 기록인 `perf-cpu.data`가 있는 작업 디렉터리. Perl과 [FlameGraph 저장소](https://github.com/brendangregg/FlameGraph)의 checkout이 준비되어 있다고 가정한다. `FLAMEGRAPH_DIR`는 실제 checkout 경로로 바꾼다. binary·DSO·debuginfo는 수집 당시 파일을 사용한다.
+
+```bash
+FLAMEGRAPH_DIR=/path/to/FlameGraph
+git -C "$FLAMEGRAPH_DIR" rev-parse HEAD > flamegraph-revision.txt
+sudo perf script -i perf-cpu.data \
+  -F comm,pid,tid,cpu,time,event,ip,sym,dso > perf-cpu.stacks
+"$FLAMEGRAPH_DIR/stackcollapse-perf.pl" perf-cpu.stacks > perf-cpu.folded
+"$FLAMEGRAPH_DIR/flamegraph.pl" --title='DB server CPU samples' \
+  --countname=samples perf-cpu.folded > perf-cpu.svg
+```
+
+이 변환은 새 profile을 수집하지 않는다. stack을 복원할 수 없는 샘플도 원본에서 확인하고, unknown이 많은 그래프로 세부 호출 경로를 확정하지 않는다. 그래프는 생성 파일을 로컬로 옮기거나 문서 viewer로 확인한다. 원격 서버에서 브라우저를 실행하지 않는다. [perf script](https://man7.org/linux/man-pages/man1/perf-script.1.html), [FlameGraph 생성·읽기](https://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html).
+
+위 설정은 `period` 필드를 제외해 폭을 stack별 **샘플 수**로 맞춘다. `period`를 포함한 입력은 변환기가 그 값으로 가중할 수 있으므로 단위를 함께 바꿔야 한다. 시간 순서·호출 횟수·요청 p99를 나타내지 않는다. 넓은 상위 함수에는 자식 경로의 샘플도 들어간다. 실제 생성 코드와 함수 호출 수를 별도로 확인하고, 동일 완료량당 CPU 비용과 함께 비교한다. [변환기 원본](https://github.com/brendangregg/FlameGraph/blob/master/stackcollapse-perf.pl), [호출 경로에서 가설로 이어가는 예](2026-10-28-performance-investigation-walkthrough.md#4-호출-경로로-가설을-좁히고-한-가지-변경을-시험한다).
+
 ## 6. 결과를 잘못 비교하기 쉬운 지점
 
 | 흔한 해석 | 확인·수정할 내용 |
@@ -254,6 +326,7 @@ sudo trace-cmd report -i sched-trace.dat > sched-trace.txt
 
 | 묶음 | 남길 내용 |
 | --- | --- |
+| 문제·가설 | 어느 workload의 어떤 지표가 변했는가, 경쟁 가설, 예측할 지표, 반증 조건 |
 | 비교 대상 | baseline/candidate의 정확한 commit·binary build ID, compiler·최적화 옵션, debug·sanitizer·allocator·kernel config |
 | 하드웨어·실행 환경 | CPU·microcode·메모리·NUMA·SMT·가상화, 커널·도구 버전, 저장장치·FS·mount, governor·주파수·thermal 상태 |
 | DB 조건 | 설정·buffer pool·WAL/durability, schema·index·통계·실행계획, 데이터 생성 seed·크기·실제 저장 형태, 시작 상태 |
@@ -262,6 +335,9 @@ sudo trace-cmd report -i sched-trace.dat > sched-trace.txt
 | 판정 지표 | 정확성·오류·retry·timeout, elapsed·TPS/QPS·latency 분포, 서버 CPU time·instructions/성공 작업·cycles, 논리/물리 I/O·WAL |
 | 수집 품질 | PID·TID·CPU·cgroup 범위, user/kernel 포함 여부, events·sample rate·unwind, multiplex·lost events·buffer overrun |
 | 반복과 원본 | A/B 순서 교대·여러 번 반복한 개별값과 분산, 사용 명령·원본 결과·stderr, 성능 수집 on/off 차이 |
+| 자원·오류 확인 | USE 각 칸의 값·구간·원본, 확인하지 못한 `unknown`과 사유, kernel·DB 오류의 변화량 |
+| 제한 요인과 구분 실험 | 의심되는 제한 요인, 지지·반대 증거, 한 가지 변경, 예상 결과와 실제 결과 |
+| 결론·다음 행동 | 해결·일부 설명·미확정 중 현재 상태, 목표 지표·정확성·tail 결과, 적용 범위, 남은 질문과 다음 구분 실험 |
 
 실제 회귀 판정은 **수집 부하가 작은 반복 실험**으로 하고, 원인을 찾는 고밀도 tracing·Valgrind·debug kernel 실험은 별도로 연결한다. 최적화 후에는 원래 조건의 처리량·latency·정확성을 다시 확인한다. 특정 지표 하나의 개선만으로 DB 전체 개선을 확정하지 않는다.
 

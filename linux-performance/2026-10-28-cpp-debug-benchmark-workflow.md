@@ -4,6 +4,8 @@
 
 [Linux 성능 측정 도구 가이드](2026-10-28-linux-db-performance-survey.md)가 OS와 하드웨어에서 무엇을 관찰할지 설명한다면, 이 문서는 **재현 → 빌드 준비 → 측정 → 코드 분석 → 한 가지 변경 → 정확성·성능 재검증**을 연결한다. 아래 순서와 도구 조합은 공식 자료를 바탕으로 구성한 실무 제안이다.
 
+원인 가설을 선택하는 과정은 [C++·DB 성능 조사 예제](2026-10-28-performance-investigation-walkthrough.md)에서 먼저 볼 수 있다. 설명용 수치로 USE 확인, 같은 완료량의 비용, 호출 경로와 호출 수, 반증 조건을 연결한다. profile을 SVG로 만드는 명령은 [측정 가이드 5.6절](2026-10-28-linux-db-performance-survey.md#56-cpu-flamegraph까지-생성한다)을 따른다.
+
 ## 1. 질문에 따라 시작점을 고른다
 
 | 현재 질문 | 먼저 할 일 | 남길 증거 |
@@ -376,7 +378,10 @@ with (out / "runs.jsonl").open("w") as report:
 | 명령·구간 | 작업 디렉터리, 실행 명령, PID/TID/cgroup, timer·counter의 시작/끝 |
 | 원본 | 개별 A/B 값, stdout/stderr·JSON, profile·symbols·입력·빌드 로그 |
 | 수집 품질 | lost samples·multiplex·지원 이벤트, instrumentation on/off 영향 |
+| 자원·제한 요인 | USE 확인과 `unknown`, 요청과 관련된 실행·wait, 의심되는 제한 요인과 근거·반대 증거 |
 | 결론 | 정확성 결과, end-to-end와 micro 결과, 변동 폭, 적용 범위·남은 불확실성 |
+
+원인이 미확정이면 다음 구분 실험을 함께 적는다. [복사용 조사 기록 양식](2026-10-28-performance-investigation-walkthrough.md#8-다음-조사에-복사할-기록-양식)을 사용할 수 있다.
 
 `linux-perf`는 수집·hotspot 분석, `performance-patterns`는 관측에서 수정 후보를 찾는 절차로 활용한다. `research`는 공식 근거와 재현 절차를 문서로 남기는 데 사용한다. 설치된 스킬의 휴리스틱은 조사 출발점이며, 이 문서에서는 PMU 지원·권한·명령 옵션을 공식 문서로 확인하고 단일 지표로 원인을 단정하지 않는다. [Intel 스킬 원본](https://github.com/intel/intel-performance-skills).
 
