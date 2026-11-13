@@ -235,3 +235,43 @@ DB 생성은 빨라졌지만, 오염 데이터 흐름(taint tracking) 쿼리는 
 1. CodeQL 선별 쿼리 세트를 `.qls` 파일로 만들어 `src` DB에 돌리고, 실제 실행 시간을 잰다.
 2. 위 표의 미등록 결함(`sm_count_tokens`, `type_checking.c:20059`, `dwb_log`)을 확인해 이슈로 만들지 정한다.
 3. 변경 파일 대상 cppcheck를 hook이나 skill로 만든다.
+
+## 8. 후속 작업 결과 (같은 날)
+
+위 다음 단계 후보를 모두 진행했다. 각 작업은 별도 에이전트가 맡았고, 결함마다 재현을 먼저 시도한 뒤 중복 검사를 거쳐 이슈로 등록했다.
+
+### 만든 도구
+
+| 도구 | 위치 | 내용 |
+| --- | --- | --- |
+| CodeQL 선별 suite | `my-cubrid/static-analysis/codeql/` (`cubrid-bugs.qls`, `run.sh`) | 쿼리 59개. `src` DB 생성 약 2분, 분석 중앙값 3분 44초, 최대 메모리 약 35GiB. 결과 30건 중 19건이 실제 결함 |
+| `cubrid-static-check <base>` | `my-cubrid/static-analysis/static-check/`, `just sync`로 설치 | 변경이 새로 추가한 cppcheck·clang-tidy `bugprone-*` 결과, 새 CPD 복제, lizard 복잡도 증가만 보고. 보통 PR 15~60초. `cubrid-code-review`, `cubrid-pr-create` skill에 선택 단계로 연결 |
+| format attribute 측정 | `my-cubrid/static-analysis/format-attr/` | 로깅 함수 29개에 printf format attribute를 붙였을 때의 경고 분류. 218줄 중 90줄이 실제 불일치 |
+| clone drift 감사 | `my-cubrid-docs/code-analysis/clone-drift/` | CPD와 같은 이름 함수 쌍 탐지를 함께 써서, 한쪽 복사본에만 들어간 수정을 찾는다 |
+| ASan preset | `my-cubrid` `CMakeUserPresets.json` (`asan_debug_gcc`, `asan_noscope_debug_gcc`) | `use_system_malloc=yes`와 함께 쓰면 CUBRID 자체 할당기를 우회해 범위 밖 읽기를 잡는다 |
+
+### 등록한 이슈
+
+| 이슈 | 결함 | 찾은 방법 | 재현 |
+| --- | --- | --- | --- |
+| [CBRD-28080](https://jira.cubrid.org/browse/CBRD-28080) | PL/CSQL `%TYPE` + NULL 원소 컬렉션 DEFAULT → `std::string (NULL)`로 csql 비정상 종료 | cppcheck | SQL 두 문장으로 재현 |
+| [CBRD-28083](https://jira.cubrid.org/browse/CBRD-28083) | `pt_coerce_value_internal` 괄호 누락으로 오류 코드 대신 1 반환 | CodeQL | gdb 오류 주입 |
+| [CBRD-28084](https://jira.cubrid.org/browse/CBRD-28084) | `sm_count_tokens` 문자열 끝 너머 읽기 | CodeQL | 재현, ASan으로도 확인 |
+| [CBRD-28090](https://jira.cubrid.org/browse/CBRD-28090) | `cubrid broker info`의 `REJECT_CLIENT_FLAG` 값이 낡은 값으로 표시 | CodeQL(후보 단계 쿼리) | 재현 |
+| [CBRD-28091](https://jira.cubrid.org/browse/CBRD-28091) | `catcls_get_db_collation` realloc 뒤 잘못된 포인터 검사 | CodeQL | gdb 오류 주입 |
+| [CBRD-28092](https://jira.cubrid.org/browse/CBRD-28092) | `db_macro.c` `%.17g`가 24바이트 버퍼를 1바이트 넘침 | CodeQL | gdb watchpoint로 확인 |
+| [CBRD-28093](https://jira.cubrid.org/browse/CBRD-28093) | `REPLACE`에서 `db_is_deleted` 오류 코드 소실 | CodeQL | gdb 오류 주입 |
+| [CBRD-28094](https://jira.cubrid.org/browse/CBRD-28094) | 디버그 로그 format 인자 불일치 16곳, `LOG_THREAD_TRAN_ARGS`가 trid 대신 포인터 출력 | CodeQL + format attribute | 빌드 경고로 확인. 수정 커밋은 로컬에만 있음 |
+| [CBRD-28095](https://jira.cubrid.org/browse/CBRD-28095) | `coll_name` 1바이트 넘침 | CBRD-28091 조사 중 발견 | gdb 오류 주입 |
+| [CBRD-28096](https://jira.cubrid.org/browse/CBRD-28096) | `xts_save_packable_object` 4바이트 heap 범위 밖 읽기 (PL/CSQL 호출마다) | ASan | 재현 |
+| [CBRD-28097](https://jira.cubrid.org/browse/CBRD-28097) | Java SP·PL/CSQL 동적 SQL의 `?` 개수 세기가 `no_backslash_escapes` 무시 | clone drift 감사 | 재현 |
+| [CBRD-28098](https://jira.cubrid.org/browse/CBRD-28098) | `pl_status_server`가 `new[]` 메모리를 `free`로 해제 | ASan | 재현 |
+
+기존 이슈 보강: [CBRD-24699](https://jira.cubrid.org/browse/CBRD-24699)에 루프 변수 재사용 분석과 재현 시도 결과를, [CBRD-27875](https://jira.cubrid.org/browse/CBRD-27875)에 두 문장짜리 결정적 재현을 댓글로 남겼다.
+
+### 배운 점
+
+- **도구가 가리킨 줄은 맞아도 원인 설명은 틀릴 수 있다.** CBRD-28080은 cppcheck가 지적한 경로가 아니라 다른 경로로 터졌다. 결과는 호출 경로 추적과 재현으로 확인해야 한다.
+- **도구를 섞어 쓰면 서로 보완된다.** CPD는 C++로 다시 쓴 복사본(CBRD-28080, CBRD-28097)을 놓쳤고, 같은 이름 함수 쌍 탐지가 찾았다. ASan은 valgrind가 못 본 범위 밖 읽기(CBRD-28084)를 `use_system_malloc=yes`와 함께 잡았다.
+- **ASan 빌드 자체도 검증해야 한다.** 처음 ASan preset은 컴파일에 linuxbrew `as` 2.47, 링크에 시스템 `ld` 2.35.2를 써서, 링커가 `push`를 `call`로 잘못 바꿨다. 그 결과 서버가 가짜 assert로 죽었고, 하마터면 CUBRID 결함으로 등록할 뻔했다. preset을 같은 binutils로 링크하도록 고친 뒤 다시 돌려 기존 결과를 확인했다.
+- **중복 검사가 실제로 걸렀다.** `query_graph.c` 결함은 이미 CBRD-24699로 등록돼 있었다.
